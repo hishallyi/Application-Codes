@@ -18,48 +18,43 @@ def homography_alignment(src_img, ref_img):
     gray1 = cv2.cvtColor(src_img, cv2.COLOR_BGR2GRAY)
     gray2 = cv2.cvtColor(ref_img, cv2.COLOR_BGR2GRAY)
 
-    # 提取特征点和计算特征描述符
+    # feature point matching
     detector = cv2.SIFT_create()
     kp1, des1 = detector.detectAndCompute(gray1, None)
     kp2, des2 = detector.detectAndCompute(gray2, None)
-
-    # 特征点匹配
     bf = cv2.BFMatcher()
     matches = bf.knnMatch(des1, des2, k=2)
 
-    # 筛选匹配点
+    # filter for matching points
     good_matches = []  # length：1004
     for m, n in matches:
         if m.distance < 0.75 * n.distance:
             good_matches.append(m)
 
-    # 提取匹配点的坐标
+    # extract the coordinates of the matching point
     src_pts = np.float32([kp1[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2)  # shape：(1004,1,2)
     dst_pts = np.float32([kp2[m.trainIdx].pt for m in good_matches]).reshape(-1, 1, 2)
 
-    # 计算单应性矩阵
+    #  calculate the homology matrix
     H, _ = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)  # 3×3的单应矩阵
+    print("单应矩阵：\n", H)
 
-    # 对齐图像
+    # align the image
     aligned_img = cv2.warpPerspective(src_img, H, (src_img.shape[1], src_img.shape[0]))
+    # Save the aligned image
+    cv2.imwrite('alignedImage.jpg', cv2.cvtColor(aligned_img, cv2.COLOR_BGR2RGB))
 
-    cv2.imwrite('aligned_img2.jpg', cv2.cvtColor(aligned_img, cv2.COLOR_BGR2RGB))
-
-    # 显示对齐后的图像
+    # displays the aligned image
     fig, axes = plt.subplots(1, 3, dpi=200)
-
     axes[0].imshow(cv2.cvtColor(src_img, cv2.COLOR_BGR2RGB))
-    axes[0].set_title('Image 1')
+    axes[0].set_title('Src Image')
     axes[0].axis('off')
-
     axes[1].imshow(cv2.cvtColor(aligned_img, cv2.COLOR_BGR2RGB))
-    axes[1].set_title('Aligned Image 1')
+    axes[1].set_title('Aligned Src Image')
     axes[1].axis('off')
-
     axes[2].imshow(cv2.cvtColor(ref_img, cv2.COLOR_BGR2RGB))
-    axes[2].set_title('Image 2')
+    axes[2].set_title('Reference Image')
     axes[2].axis('off')
-
     plt.tight_layout()
-    plt.savefig('images\\homographyAlignment.jpg', bbox_inches='tight', pad_inches=0.1)
+    # plt.savefig('ComparisonImage.jpg', bbox_inches='tight', pad_inches=0.1)
     plt.show()
