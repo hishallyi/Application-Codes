@@ -3,9 +3,6 @@
 @Date    ：2024/4/18
 @Code    : 利用单应变换进行图像对齐
 """
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
 
 
 def homography_alignment(src_img, ref_img):
@@ -15,6 +12,10 @@ def homography_alignment(src_img, ref_img):
     @param ref_img: 参考图像的RGB三通道像素值
     @return: 源图像和参考图像的单应矩阵Homography、对齐后的源图像
     """
+    import cv2
+    import numpy as np
+    import matplotlib.pyplot as plt
+
     gray1 = cv2.cvtColor(src_img, cv2.COLOR_BGR2GRAY)
     gray2 = cv2.cvtColor(ref_img, cv2.COLOR_BGR2GRAY)
 
