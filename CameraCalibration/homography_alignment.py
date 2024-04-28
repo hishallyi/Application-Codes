@@ -37,11 +37,9 @@ def homography_alignment(src_img, ref_img):
 
     #  calculate the homology matrix
     H, _ = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)  # 3×3的单应矩阵
-    print("单应矩阵：\n", H)
 
-    # align the image
+    # align the image and save
     aligned_img = cv2.warpPerspective(src_img, H, (src_img.shape[1], src_img.shape[0]))
-    # Save the aligned image
     cv2.imwrite('alignedImage.jpg', cv2.cvtColor(aligned_img, cv2.COLOR_BGR2RGB))
 
     # displays the aligned image
@@ -58,3 +56,5 @@ def homography_alignment(src_img, ref_img):
     plt.tight_layout()
     # plt.savefig('ComparisonImage.jpg', bbox_inches='tight', pad_inches=0.1)
     plt.show()
+
+    return H
