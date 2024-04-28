@@ -40,7 +40,8 @@ def homography_alignment(src_img, ref_img):
 
     # align the image and save
     aligned_img = cv2.warpPerspective(src_img, H, (src_img.shape[1], src_img.shape[0]))
-    cv2.imwrite('alignedImage.jpg', cv2.cvtColor(aligned_img, cv2.COLOR_BGR2RGB))
+    # cv2.imwrite('alignedImage.jpg', cv2.cvtColor(aligned_img, cv2.COLOR_BGR2RGB))
+    aligned_img_2 = cv2.cvtColor(aligned_img, cv2.COLOR_BGR2RGB)
 
     # displays the aligned image
     fig, axes = plt.subplots(1, 3, dpi=200)
@@ -57,4 +58,4 @@ def homography_alignment(src_img, ref_img):
     # plt.savefig('ComparisonImage.jpg', bbox_inches='tight', pad_inches=0.1)
     plt.show()
 
-    return H
+    return H, aligned_img, aligned_img_2
