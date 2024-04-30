@@ -14,12 +14,12 @@ def extract_frames(video_path, output_folder):
         success, image = video_capture.read()
         print(f"Frame {count} extracted successfully")
         count += 1
-
+    print("Frames Number：", count)
     video_capture.release()
 
 
 if __name__ == "__main__":
-    video_path = "beauty.mp4"  # 视频文件路径
+    video_path = "haocun.mp4"  # 视频文件路径
     output_folder = "frames"  # 保存帧图像的文件夹
 
     # 创建保存帧图像的文件夹
