@@ -1,7 +1,6 @@
 .idea
 *.jpg
 *.mp4
-beauty.mp4
 CameraCalibration/test_function.py
 CameraCalibration/images
 frames

@@ -2,6 +2,12 @@ import cv2
 
 
 def extract_frames(video_path, output_folder):
+    """
+    获取视频帧
+    @param video_path: 视频文件路径
+    @param output_folder: 输出文件夹
+    @return: 视频帧图像
+    """
     # 读取视频
     video_capture = cv2.VideoCapture(video_path)
     success, image = video_capture.read()
