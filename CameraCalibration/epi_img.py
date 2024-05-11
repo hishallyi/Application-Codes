@@ -5,6 +5,10 @@
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import glob
+import cv2
+
+from CameraCalibration.homography_alignment_batch import homography_alignment_batch
 
 
 def create_epi(aligned_images):
@@ -35,12 +39,13 @@ def visualize_epi(epi):
     plt.show()
 
 
-# 假设你已经对图像进行了对齐，并且有了对齐后的图像列表 aligned_images
-# 这里假设 aligned_images 是一个包含对齐后图像的二维数组的列表
-# 每个图像都是一个二维数组，表示一个灰度图像
+if __name__ == '__main__':
+    # 读取对齐图像
+    aligned_images = [cv2.imread(path) for path in glob.glob("./images/datasets/aligned_image_*.jpg")]
+    aligned_images_gray = [cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) for img in aligned_images]
 
-# 创建 EPI 图像
-# epi = create_epi(aligned_images)
+    # 创建 EPI 图像
+    epi = create_epi(np.array(aligned_images_gray))
 
-# 可视化 EPI 图像
-# visualize_epi(epi)
+    # 可视化 EPI 图像
+    visualize_epi(epi)
