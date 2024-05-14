@@ -8,8 +8,6 @@ import matplotlib.pyplot as plt
 import glob
 import cv2
 
-from CameraCalibration.homography_alignment_batch import homography_alignment_batch
-
 
 def create_epi(aligned_images):
     """

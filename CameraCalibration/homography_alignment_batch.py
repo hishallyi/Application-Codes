@@ -4,17 +4,20 @@
 @Code    : 相邻图像对齐
 """
 
-import cv2
-import numpy as np
-import glob
 
-
-def homography_alignment_batch(images):
+def homography_alignment_batch(image_folder):
     """
     批量对齐图像
-    @param images: RGB images的列表
-    @return: 对齐后的图像列表和单应矩阵列表
+    :param image_folder: 图像文件夹路径
+    @return: 对齐后的图像列表和单应矩阵列表，对齐图像保存在image_folder下，文件名为aligned_image_i.jpg
     """
+    import cv2
+    import numpy as np
+    import glob
+
+    image_paths = glob.glob(f"{image_folder}/*.jpg")
+    # Read images and turn to grayscale map
+    images = [cv2.imread(path) for path in image_paths]
     # turn to grayscale map
     gray_images = [cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) for image in images]
     # select the feature detector
@@ -50,14 +53,14 @@ def homography_alignment_batch(images):
 
     # 保存对齐后的图像
     for i, aligned_image in enumerate(aligned_images):
-        cv2.imwrite("./images/datasets/aligned_image_" + str(i) + ".jpg", aligned_image)
+        cv2.imwrite(f"{image_folder}/aligned_image_" + str(i) + ".jpg", aligned_image)
 
     return aligned_images, transforms
 
 
 if __name__ == '__main__':
-    image_paths = glob.glob("./images/datasets/*.jpg")
-    # Read images and turn to grayscale map
-    images = [cv2.imread(path) for path in image_paths]
 
-    aligned_images, transforms = homography_alignment_batch(images)
+    image_folder = "D:/FileDevelop/Datasets/Galaxy/scene_1"
+    aligned_images, transforms = homography_alignment_batch(image_folder)
+    for i, transform in enumerate(transforms):
+        print(f"Transform matrix of image {i + 1} and {i + 2}: \n{transform}")
