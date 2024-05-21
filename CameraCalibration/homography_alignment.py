@@ -66,7 +66,7 @@ def homography_alignment(src_img_path, ref_img_path):
 if __name__ == '__main__':
     import cv2
 
-    H, aligned_img = homography_alignment(src_img_path="D:/FileDevelop/Datasets/Galaxy/scene_1/image_4.jpg",
-                                          ref_img_path="D:/FileDevelop/Datasets/Galaxy/scene_1/image_1.jpg")
-    cv2.imwrite('D:/FileDevelop/Datasets/Galaxy/scene_1/alignedImage_4.jpg', aligned_img)
+    H, aligned_img = homography_alignment(src_img_path="D:/FileDevelop/Datasets/Galaxy/scene_2/image_3.jpg",
+                                          ref_img_path="D:/FileDevelop/Datasets/Galaxy/scene_2/image_1.jpg")
+    cv2.imwrite('D:/FileDevelop/Datasets/Galaxy/scene_2/alignedImage_3.jpg', aligned_img)
     print("Homography Matrix:", H)
